@@ -22,6 +22,16 @@ CREATE TABLE pacientes (
     sexo_biologico CHAR(1) CHECK (sexo_biologico IN ('M', 'F')) NOT NULL,
 	genero CHAR(15) CHECK (genero IN ('Feminino', 'Masculino')) NOT NULL,
 	sindrome VARCHAR(20) CHECK (sindrome IN ('normal', 'mutacao', 'pre_mutacao')) NOT NULL,
+    nome_mae VARCHAR(150),
+    nome_pai VARCHAR(150),
+    responsavel_nome VARCHAR(150),
+    responsavel_parentesco VARCHAR(50),
+    responsavel_cpf VARCHAR(14),
+    cidade VARCHAR(100),
+    estado VARCHAR(50),
+    pais VARCHAR(50),
+    telefone_2 VARCHAR(20),
+    whatsapp VARCHAR(20),
     id_medico_responsavel INT,
     CONSTRAINT fk_paciente_usuario FOREIGN KEY (id_usuario)
 	REFERENCES usuarios(id) ON DELETE CASCADE,
@@ -39,6 +49,7 @@ CREATE TABLE historico_medico (
     hist_menopausa_precoce BOOLEAN DEFAULT FALSE,
     hist_ataxia BOOLEAN DEFAULT FALSE,
 	interesse_exame BOOLEAN DEFAULT FALSE,
+    tem_irmaos BOOLEAN DEFAULT FALSE,
     CONSTRAINT fk_historico_paciente FOREIGN KEY (id_paciente)
     REFERENCES pacientes(id_usuario) ON DELETE CASCADE
 );

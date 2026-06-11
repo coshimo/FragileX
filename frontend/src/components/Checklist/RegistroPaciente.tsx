@@ -26,6 +26,16 @@ export default function RegistroPaciente() {
   const [sexoBiologico, setSexoBiologico] = useState("");
   const [genero, setGenero] = useState("");
   const [sindrome, setSindrome] = useState("normal");
+  const [nomeMae, setNomeMae] = useState("");
+  const [nomePai, setNomePai] = useState("");
+  const [responsavelNome, setResponsavelNome] = useState("");
+  const [responsavelParentesco, setResponsavelParentesco] = useState("");
+  const [responsavelCpf, setResponsavelCpf] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [estado, setEstado] = useState("");
+  const [pais, setPais] = useState("");
+  const [telefone2, setTelefone2] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
 
   const handleStep1 = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,7 +87,11 @@ export default function RegistroPaciente() {
     try {
       const res = await apiFetch("/auth/registro/completar", {
         method: "POST",
-        body: JSON.stringify({ userId, dataNascimento, sexoBiologico, genero, sindrome }),
+        body: JSON.stringify({ 
+          userId, dataNascimento, sexoBiologico, genero, sindrome,
+          nomeMae, nomePai, responsavelNome, responsavelParentesco, responsavelCpf,
+          cidade, estado, pais, telefone2, whatsapp
+        }),
       });
 
       if (!res.ok) {
@@ -160,6 +174,22 @@ export default function RegistroPaciente() {
                   <option value="pre_mutacao">Pré-Mutação</option>
                 </select>
               </div>
+
+              <ItemCadastro label="Nome da Mãe" name="nomeMae" required value={nomeMae} onChange={(e) => setNomeMae(e.target.value)} />
+              <ItemCadastro label="Nome do Pai" name="nomePai" value={nomePai} onChange={(e) => setNomePai(e.target.value)} />
+              <ItemCadastro label="Responsável pelo Paciente" name="responsavelNome" required value={responsavelNome} onChange={(e) => setResponsavelNome(e.target.value)} />
+              <ItemCadastro label="Grau de parentesco" name="responsavelParentesco" required value={responsavelParentesco} onChange={(e) => setResponsavelParentesco(e.target.value)} />
+              <ItemCadastro label="CPF do responsável" name="responsavelCpf" required value={responsavelCpf} onChange={(e) => setResponsavelCpf(e.target.value)} />
+
+              <ItemCadastro label="Cidade" name="cidade" required value={cidade} onChange={(e) => setCidade(e.target.value)} />
+              <ItemCadastro label="Estado" name="estado" required value={estado} onChange={(e) => setEstado(e.target.value)} />
+              <ItemCadastro label="País" name="pais" required value={pais} onChange={(e) => setPais(e.target.value)} />
+            </div>
+
+            <h2 className="cadastro-section-title" style={{ marginTop: '24px' }}>Formas de Contato (Adicionais)</h2>
+            <div className="cadastro-grid">
+              <ItemCadastro label="Whatsapp" name="whatsapp" type="tel" value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
+              <ItemCadastro label="Telefone 2" name="telefone2" type="tel" value={telefone2} onChange={(e) => setTelefone2(e.target.value)} />
             </div>
           </div>
           <div className="form-actions" style={{ gap: "16px" }}>

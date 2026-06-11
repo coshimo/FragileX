@@ -76,17 +76,29 @@ export const registro = async (req: Request, res: Response) => {
 };
 
 export const completarRegistro = async (req: Request, res: Response) => {
-  const { userId, dataNascimento, sexoBiologico, genero, sindrome } = req.body;
+  const {
+    userId, dataNascimento, sexoBiologico, genero, sindrome,
+    nomeMae, nomePai, responsavelNome, responsavelParentesco, responsavelCpf,
+    cidade, estado, pais, telefone2, whatsapp
+  } = req.body;
 
-  if (!userId || !dataNascimento || !sexoBiologico || !genero || !sindrome) {
+  if (!userId || !dataNascimento || !sexoBiologico || !genero || !sindrome || !nomeMae || !responsavelNome || !responsavelParentesco || !responsavelCpf || !cidade || !estado || !pais) {
     res.status(400).json({ error: "Dados obrigatórios faltando" });
     return;
   }
 
   try {
-    const query = `INSERT INTO pacientes (id_usuario, data_nascimento, sexo_biologico, genero, sindrome)
-                   VALUES ($1, $2, $3, $4, $5) RETURNING *`;
-    const valores = [userId, dataNascimento, sexoBiologico, genero, sindrome];
+    const query = `INSERT INTO pacientes (
+                     id_usuario, data_nascimento, sexo_biologico, genero, sindrome,
+                     nome_mae, nome_pai, responsavel_nome, responsavel_parentesco, responsavel_cpf,
+                     cidade, estado, pais, telefone_2, whatsapp
+                   )
+                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *`;
+    const valores = [
+      userId, dataNascimento, sexoBiologico, genero, sindrome,
+      nomeMae, nomePai || null, responsavelNome, responsavelParentesco, responsavelCpf,
+      cidade, estado, pais, telefone2 || null, whatsapp || null
+    ];
     const resultado = await db.query(query, valores);
 
     // Auto-login after completing registration

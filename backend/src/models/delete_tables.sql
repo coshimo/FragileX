@@ -1,12 +1,11 @@
+DROP TABLE IF EXISTS "session";
+DROP TABLE IF EXISTS consultas;
 DROP TABLE IF EXISTS checklist_sintomas;
 DROP TABLE IF EXISTS sintomas;
 DROP TABLE IF EXISTS checklists;
 DROP TABLE IF EXISTS historico_medico; 
 DROP TABLE IF EXISTS exame;
 DROP TABLE IF EXISTS funcionarios_ibk;
+DROP TABLE IF EXISTS pacientes;
 DROP TABLE IF EXISTS medicos;
-DROP TABLE IF EXISTS pacientes; 
 DROP TABLE IF EXISTS usuarios;
-
-
-

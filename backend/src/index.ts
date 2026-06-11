@@ -11,6 +11,7 @@ import sintomaRotas from "./routes/sintomasRotas";
 import authRotas from "./routes/authRotas";
 import pacientesRotas from "./routes/pacientesRotas";
 import consultasRotas from "./routes/consultasRotas";
+import checklistsRotas from "./routes/checklistsRotas";
 
 const app = express();
 const PgSessionStore = pgSession(session);
@@ -57,10 +58,11 @@ app.use("/auth/login", authLimiter);
 app.use("/auth/registro", authLimiter);
 
 // Routes
-app.use("/sintomas", sintomaRotas);
 app.use("/auth", authRotas);
+app.use("/sintomas", sintomaRotas);
 app.use("/pacientes", pacientesRotas);
 app.use("/consultas", consultasRotas);
+app.use("/checklists", checklistsRotas);
 
 app.listen(3000, () => {
   console.log("Rodando na porta 3000");
