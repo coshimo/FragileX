@@ -1,20 +1,13 @@
-import { URL_API } from "../config/api";
+import { apiClient } from "./apiClient";
 
 export async function sendCadastro(dadosFinais: object) {
   try {
-    const response = await fetch(`${URL_API}/cadastro`, {
+    const response = await apiClient('/cadastro', {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(dadosFinais),
     });
-
-    if (!response.ok) {
-      throw new Error(`Erro na requisição, status: ${response.status}`);
-    }
-
-    return await response.json();
+    
+    return response;
   } catch (error) {
     console.error("Erro ao enviar cadastro:", error);
     throw error;

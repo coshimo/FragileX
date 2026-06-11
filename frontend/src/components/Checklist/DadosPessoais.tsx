@@ -16,6 +16,11 @@ const DadosPessoais = ({ isMedico = false }: { isMedico?: boolean }) => {
           required
         />
         <ItemCadastro
+          label="CPF do Paciente"
+          name="cpfPaciente"
+          required
+        />
+        <ItemCadastro
           label="Data de Nascimento"
           name="dataNascimento"
           type="date"
@@ -74,6 +79,16 @@ const DadosPessoais = ({ isMedico = false }: { isMedico?: boolean }) => {
           required
         />
 
+        <ItemCadastro
+          label="Rua"
+          name="rua"
+          required
+        />
+        <ItemCadastro
+          label="Bairro"
+          name="bairro"
+          required
+        />
         <ItemCadastro
           label="Cidade"
           name="cidade"
