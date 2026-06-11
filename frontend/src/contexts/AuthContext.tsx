@@ -1,16 +1,18 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
 export type Role = 'medico' | 'instituto' | 'paciente' | null;
 
 export interface Usuario {
-  email: string;
-  role: Role;
-  nome: string;
+  id: string | number;
+  email?: string;
+  role?: Role;
+  nome?: string;
 }
 
 interface AuthContextType {
   usuario: Usuario | null;
-  login: (role: Role) => void;
+  token: string | null;
+  login: (usuarioData: Usuario, tokenStr: string) => void;
   logout: () => void;
 }
 
@@ -18,22 +20,35 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [usuario, setUsuario] = useState<Usuario | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
-  const login = (role: Role) => {
-    if (!role) return;
-    setUsuario({
-      email: `${role}@teste.com`,
-      nome: `Mock ${role.charAt(0).toUpperCase() + role.slice(1)}`,
-      role
-    });
+  useEffect(() => {
+    // Tenta recuperar do localStorage ao carregar a página
+    const storedToken = localStorage.getItem('@App:token');
+    const storedUser = localStorage.getItem('@App:user');
+
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUsuario(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const login = (usuarioData: Usuario, tokenStr: string) => {
+    setUsuario(usuarioData);
+    setToken(tokenStr);
+    localStorage.setItem('@App:token', tokenStr);
+    localStorage.setItem('@App:user', JSON.stringify(usuarioData));
   };
 
   const logout = () => {
     setUsuario(null);
+    setToken(null);
+    localStorage.removeItem('@App:token');
+    localStorage.removeItem('@App:user');
   };
 
   return (
-    <AuthContext.Provider value={{ usuario, login, logout }}>
+    <AuthContext.Provider value={{ usuario, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

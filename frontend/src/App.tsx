@@ -11,7 +11,7 @@ import PreencherChecklist from './components/Checklist/PreencherChecklist';
 import Login from './components/LandingPage/Login/Login';
 import AplicacaoMedico from './components/LandingPage/AplicacaoMedico/AplicacaoMedico';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-
+import ProtectedRoute from './components/Shared/ProtectedRoute';
 const LandingPageLayout = () => {
   const navigate = useNavigate();
   const { usuario, logout } = useAuth();
@@ -39,15 +39,43 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingPageLayout />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        
+        {/* Rotas Protegidas */}
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
 
-        <Route path="/registro" element={<RegistroPaciente />} />
-        <Route path="/preencher-checklist" element={<PreencherChecklist />} />
-        <Route path="/checklist-rapido" element={<PreencherChecklist isRapido />} />
+        <Route path="/registro" element={
+          <ProtectedRoute>
+            <RegistroPaciente />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/preencher-checklist" element={
+          <ProtectedRoute>
+            <PreencherChecklist />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/checklist-rapido" element={
+          <ProtectedRoute>
+            <PreencherChecklist isRapido />
+          </ProtectedRoute>
+        } />
 
-        <Route path="/aplicacao-medico" element={<AplicacaoMedico />} />
+        <Route path="/aplicacao-medico" element={
+          <ProtectedRoute>
+            <AplicacaoMedico />
+          </ProtectedRoute>
+        } />
 
-        <Route path="/patient/:id" element={<PatientCardPage />} />
+        <Route path="/patient/:id" element={
+          <ProtectedRoute>
+            <PatientCardPage />
+          </ProtectedRoute>
+        } />
       </Routes>
     </AuthProvider>
   );

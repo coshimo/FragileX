@@ -4,6 +4,7 @@ import { verificarEmail } from "./services/verificarEmail";
 import express from "express";
 import cors from "cors";
 import sintomaRotas from "./routes/sintomasRotas";
+import authRotas from "./routes/authRotas";
 
 
 
@@ -26,6 +27,7 @@ app.use(cors());
 
 app.use(express.json());
 
+app.use('/auth', authRotas);
 app.use('/sintomas', sintomaRotas);
 
 app.listen(3000, () => {console.log("Rodando")});
